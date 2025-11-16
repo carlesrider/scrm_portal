@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+.env
+portal-backend/.env
+portal-frontend/dist
+portal-backend/dist
