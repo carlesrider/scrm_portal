@@ -28,13 +28,13 @@ This repository contains a lightweight PHP 8+ web portal that connects to SuiteC
 
 3. Copy `.env.example` to `.env` (optional) and adjust SuiteCRM credentials, or edit `config/config.php` directly.
 4. Update `config/modules.php` to adjust which modules and fields are available to portal users.
-5. Start the built-in PHP server:
+5. Start the built-in PHP server (you can change the port if `8000` is already in use):
 
    ```bash
-   php -S localhost:8000 -t public
+   php -S localhost:8000 -t public   # Replace 8000 with any other available port, e.g. 8081
    ```
 
-6. Visit `http://localhost:8000` in your browser.
+6. Visit `http://localhost:8000` (or whichever port you chose) in your browser.
 
 ## Configuration
 
@@ -49,6 +49,20 @@ Provide the following values either via environment variables or in `config/conf
 - `SUITECRM_API_PASSWORD`
 
 These credentials correspond to a SuiteCRM OAuth2 client and a technical user that can access the API.
+
+#### Obtain `SUITECRM_CLIENT_ID` and `SUITECRM_CLIENT_SECRET`
+
+1. Sign in to your SuiteCRM instance with an administrator account.
+2. Navigate to **Admin > API** and open the **OAuth Keys** panel.
+3. Click **Create** (or **New**) to register a new OAuth2 client for the portal.
+4. Fill out the form:
+   - **Name**: any label that identifies the portal (e.g., "Customer Portal").
+   - **Redirect URI**: not required for the password grant, but SuiteCRM expects a value—`https://localhost` works for development.
+   - **Client Type / Grant Type**: choose **Password** (also called "Resource Owner Password Credentials") so the portal can exchange the SuiteCRM username/password for tokens.
+   - **Secret**: SuiteCRM generates this automatically after saving.
+5. Save the OAuth Key. SuiteCRM displays the **Key ID** and **Client Secret**; copy these values immediately because the secret is only shown once.
+6. Assign the Key ID to `SUITECRM_CLIENT_ID` and the secret to `SUITECRM_CLIENT_SECRET` in your `.env` file or in `config/config.php`.
+7. (Optional) For production, create separate OAuth keys per environment and restrict them with appropriate roles/scopes.
 
 ### Module Configuration
 
